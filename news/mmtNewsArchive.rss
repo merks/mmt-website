@@ -6,10 +6,10 @@
     <description>MMT News</description>
 
    <item>
-		<title>ATL web site moved from GMT to M2M</title>
-      	<link>http://www.eclipse.org/m2m/news/#newsM2M_20070115_B</link>
+		<title>ATL web site moved from GMT to MMT</title>
+      	<link>http://www.eclipse.org/mmt/news/#newsMMT_20070115_B</link>
 		<description>
-			<a name="newsM2M_20070115_B" />
+			<a name="newsMMT_20070115_B" />
 			<p align="justify">
 				ATL web site moved from GMT to M2M. It is now accessible here: <a href="http://www.eclipse.org/m2m/atl/">http://www.eclipse.org/m2m/atl/</a>.
 			</p>
@@ -26,9 +26,9 @@
 
    <item>
 		<title>ATL recognized as a standard solution for model transformation in Eclipse</title>
-      	<link>http://www.eclipse.org/m2m/news/#newsM2M_20070115_A</link>
+      	<link>http://www.eclipse.org/mmt/news/#newsMMT_20070115_A</link>
 		<description>
-			<a name="newsM2M_20070115_A" />
+			<a name="newsMMT_20070115_A" />
 			
 			<p align="justify">The ATL transformation language defined by INRIA has been recognized as a standard component in Eclipse. ATL is now integrated into the new M2M (Model-to-Model, 
 			<a href="http://www.eclipse.org/m2m/">http://www.eclipse.org/m2m/</a>) project. This project belongs to the Eclipse modeling activities branch 
@@ -60,7 +60,7 @@
 
    <item>
 		<title>M2M is alive</title>
-      	<link>http://www.eclipse.org/m2m/</link>
+      	<link>http://www.eclipse.org/mmt/</link>
 		<description>
 			<p align="justify">
 				The M2M project started with an initial version of the M2M web site.
