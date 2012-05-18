@@ -22,14 +22,6 @@ function get_mmtnews_verbose($count=100) {
 	return rss_to_html("mmtNewsArchive", "/mmt/news/", "long", $count);
 }
 
-function get_atlnews($count=100) {
-	return rss_to_html("atlNewsArchive", "/atl/news/", "short", $count);
-}
-
-function get_atlnews_verbose($count=100) {
-	return rss_to_html("atlNewsArchive", "/atl/news/", "long", $count);
-}
-
 /*
 * This function generates a "short" list of news items, containing only the
 * title and the date for each item. Each channel in the RSS file is included
