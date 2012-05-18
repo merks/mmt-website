@@ -1,5 +1,5 @@
 <?php
-require_once ("/modeling/includes/buildServer-common.php");
+require_once ("../../modeling/includes/buildServer-common.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php"); require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php");  require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php"); $App = new App(); $Nav = new Nav(); $Menu = new Menu(); include($App->getProjectCommon());
 
 ob_start();
@@ -47,7 +47,7 @@ $dls = array(
 			"Examples" => "examples",
 			"Automated Tests" => "automated-tests"
 		)
-	),
+	)
 );
 
 /* list of valid file prefixes for projects who have been renamed; keys have leading / to match $proj */
@@ -59,7 +59,7 @@ $filePre = array(
 /* define showNotes(), $oldrels, doLanguagePacks() in extras-$proj.php (or just extras.php for flat projects) if necessary, downloads-common.php will include them */
 /* end config */
 
-if ($isBuildServer) { include_once $_SERVER["DOCUMENT_ROOT"] . "/modeling/mmt/build/sideitems-common.php"; }
+if ($isBuildServer) { include_once $_SERVER["DOCUMENT_ROOT"] . "/mmt/build/sideitems-common.php"; }
 require_once($_SERVER["DOCUMENT_ROOT"] . "/modeling/includes/downloads-common.php");
 
 $html = ob_get_contents();
