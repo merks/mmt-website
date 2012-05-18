@@ -6,6 +6,19 @@
     <description>MMT News</description>
 
    <item>
+		<title>M2M project renamed as MMT</title>
+      	<link>http://www.eclipse.org/mmt/news/#newsMMT_20120518</link>
+		<description>
+			<a name="newsMMT_20120518" />
+			<p align="justify">
+				The M2M name is now widely used for Machine-to-Machine. In order to avoid future confusion the Model-to-Model Transformation
+				project is changing to MMT as its short name.
+			</p>
+		</description>
+		<pubDate>Mon, 18 May 2012 19:30:00 BST</pubDate>
+	</item>
+
+   <item>
 		<title>ATL web site moved from GMT to MMT</title>
       	<link>http://www.eclipse.org/mmt/news/#newsMMT_20070115_B</link>
 		<description>
