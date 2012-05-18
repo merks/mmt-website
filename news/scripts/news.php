@@ -23,11 +23,11 @@ function get_mmtnews_verbose($count=100) {
 }
 
 function get_atlnews($count=100) {
-	return rss_to_html("atlNewsArchive", "/mmt/atl/news/", "short", $count);
+	return rss_to_html("atlNewsArchive", "/atl/news/", "short", $count);
 }
 
 function get_atlnews_verbose($count=100) {
-	return rss_to_html("atlNewsArchive", "/mmt/atl/news/", "long", $count);
+	return rss_to_html("atlNewsArchive", "/atl/news/", "long", $count);
 }
 
 /*
