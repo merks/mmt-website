@@ -9,8 +9,8 @@
 	
 	#
 	# Begin: page-specific settings.  Change these. 
-	$pageTitle 		= "Model To Model (M2M)";
-	$pageKeywords	= "M2M, Model transformation, Model, Transformation, MDE, MDD, MDA, Modeling";
+	$pageTitle 		= "Model To Model Transformation (MMT)";
+	$pageKeywords	= "MMT, Model transformation, Model, Transformation, MDE, MDD, MDA, Modeling";
 	$pageAuthor		= "Freddy Allilaire";
 	 
 	# Add page-specific Nav bars here
@@ -23,7 +23,7 @@
 	#
 	
 	include('news/scripts/news.php');
-	$m2mnews = get_m2mnews(5);
+	$mmtnews = get_mmtnews(5);
 		
 	# Paste your HTML content between the EOHTML markers!	
 	$html = <<<EOHTML
@@ -185,7 +185,7 @@
 		</div>
 -->
 		<div class="sideitem">
-			$m2mnews
+			$mmtnews
 		</div>
 	
 		<div class="sideitem">
@@ -215,6 +215,6 @@ EOHTML;
 
 
 	# Generate the web page
-	$App->AddExtraHtmlHeader("<link rel='alternate' type='application/rss+xml' title='M2M News' href='news/m2mNewsArchive.rss'>");
+	$App->AddExtraHtmlHeader("<link rel='alternate' type='application/rss+xml' title='M2M News' href='news/mmtNewsArchive.rss'>");
 	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>
