@@ -34,20 +34,38 @@
 			<tr>
 				<td width="80%">
 					<h1>$pageTitle</h1>
-				      <p align="JUSTIFY">
-						Model-to-model transformation is a key aspect of model-driven development (MDD). The M2M project will deliver a framework for model-to-model transformation languages. 
-						The core part is the transformation infrastructure. Transformations are executed by transformation engines that are plugged into the infrastructure. There are three 
-						transformation engines that are developed in the scope of this project. Each of the three represents a different category, which validates the functionality of the 
-						infrastructure from multiple contexts. M2M is a subproject of the top-level	<a href="http://www.eclipse.org/modeling/">Eclipse Modeling Project</a>.
+					<p align="JUSTIFY">
+						Model-to-Model Transformation is a key aspect of Model-Driven Development (MDD).
 					</p>
 					<p align="JUSTIFY">
-						The three are:
+						The MMT project hosts Model-to-Model Transformation languages. 
+						Transformations are executed by transformation engines that are plugged into the Eclipse Modeling infrastructure.
+						MMT is a subproject of the top-level <a href="http://www.eclipse.org/modeling/">Eclipse Modeling Project</a>.
+					</p>
+					<p align="JUSTIFY">
+						The MMT transformation projects and languages are:
 						<ul>
-							<li>ATL</li>
-							<li>Procedural QVT (Operational)</li>
-							<li>Declarative QVT (Core and Relational)</li>
+							<li><a href="http://www.eclipse.org/projects/project_summary.php?projectid=modeling.mmt.atl">ATL Transformation Language</a></li>
+							<ul>
+								<li>ATL</li>
+							</ul>
+							<li><a href="http://www.eclipse.org/projects/project.php?id=modeling.mmt.qvt-relations">QVTd (Declarative)</a></li>
+							<ul>
+								<li>QVTc (Core)</li>
+								<li>QVTr (Relational)</li>
+							</ul>
+							<li><a href="http://www.eclipse.org/projects/project_summary.php?projectid=modeling.mmt.qvt-oml">QVT Operational (Procedural)</a></li>
+							<ul>
+								<li>QVTo (Operational)</li>
+							</ul>
 						</ul>
-				    </p>
+						Other Eclipse Model-to-Model Transformation projects are:
+						<ul>
+							<li><a href="http://www.eclipse.org/projects/project.php?id=modeling.emft.epsilon">Epsilon</a></li>
+							<li><a href="http://www.eclipse.org/projects/project.php?id=modeling.gmt.viatra2">Viatra2</a></li>
+							<li>Xtend2</li>
+						</ul>
+					</p>
 		  		</td>
 			</tr>
 		</table>
@@ -57,20 +75,20 @@
 		<div class="homeitem">
 			<h3>Quick links</h3>
 			<ul>
-<!--				<li>
+				<li>
 					<table width="100%">
 						<tr>
 							<td width="80%" valign="bottom">
-								<b><a href="http://www.eclipse.org/modeling/m2m/downloads/index.php">Downloads</a></b>
+								<b><a href="http://www.eclipse.org/mmt/downloads/index.php">Downloads</a></b>
 		  					</td>
 							<td align="right">
-								<a href="http://www.eclipse.org/modeling/m2m/downloads/index.php">
+								<a href="http://www.eclipse.org/mmt/downloads/index.php">
 								<img align="right" src="resources/images/download.gif" /></a>
 							</td>
 						</tr>
 					</table>
 				</li>
--->
+
 				<li>
 					<table width="100%">
 						<tr>
