@@ -86,9 +86,8 @@ foreach (array_keys(array_diff($projects, $extraprojects)) as $z)
 	$Nav->addCustomNav($z, "$rooturl/?project=$projects[$z]", "_self", 2);
 }
 
-$Nav->addNavSeparator("MMT Downloads", "$downurl/$PR/downloads/?project=$proj");
+$Nav->addNavSeparator("Downloads", "$downurl/$PR/downloads/?project=$proj");
 $Nav->addCustomNav("Update Manager", "$rooturl/updates/", "_self", 2);
-$Nav->addNavSeparator("M2M Downloads", "$downurl/modeling/m2m/downloads/?project=$proj");
 
 $Nav->addNavSeparator("Documentation", "$rooturl/docs.php?project=$proj");
 $Nav->addCustomNav("FAQ", "$rooturl/faq.php?project=$proj", "_self", 2);
