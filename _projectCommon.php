@@ -79,7 +79,7 @@ $buildtypes = array(
 		"N" => "Nightly"
 );
 
-$Nav->addCustomNav("About This Project", "/projects/project_summary.php?projectid=mmt" . (isset ($aboutcoms[$proj]) ? "$aboutcoms[$proj]" : ""), "", 1);
+$Nav->addCustomNav("About This Project", "/projects/project_summary.php?projectid=modeling.mmt" . (isset ($aboutcoms[$proj]) ? "$aboutcoms[$proj]" : ""), "", 1);
 $Nav->addNavSeparator($projectName, "$rooturl/");
 foreach (array_keys(array_diff($projects, $extraprojects)) as $z)
 {
