@@ -11,7 +11,7 @@
 #
 #****************************************************************************
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/gmt/resources/scripts/xml_sax_parsing_extension.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/mmt/resources/scripts/xml_sax_parsing_extension.php");
 
 /*
  * This method extracts the RSS information from the file with the

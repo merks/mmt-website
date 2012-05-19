@@ -94,7 +94,7 @@
 						<tr>
 							<td width="80%" valign="bottom">
 								<b><a href="doc/">Documentation</a></b>,
-								<a href="http://wiki.eclipse.org/index.php/M2M">Wiki</a>
+								<a href="http://wiki.eclipse.org/index.php/MMT">Wiki</a>
 		  					</td>
 							<td align="right">
 								<a href="doc/">
@@ -104,24 +104,25 @@
 					</table>
 				</li>
 				<li>
-	                <a href="news://news.eclipse.org/eclipse.modeling.m2m"> users newsgroup:</a> users discussions and support
-					<a href="http://dev.eclipse.org/newslists/news.eclipse.modeling.m2m/maillist.html">[archive]</a>
-		            <a href="http://www.eclipse.org/search/search.cgi?form=extended&ul=%2Fnewslists%2Fnews.eclipse.modeling.m2m&t=5">[search]</a>
-		            <a href="http://www.eclipse.org/newsportal/thread.php?group=eclipse.modeling.m2m">[web interface]</a>
+	                <a href="news://news.eclipse.org/eclipse.mmt"> users newsgroup:</a> users discussions and support
+					<a href="http://dev.eclipse.org/newslists/news.eclipse.mmt/maillist.html">[archive]</a>
+		            <a href="http://www.eclipse.org/search/search.cgi?form=extended&ul=%2Fnewslists%2Fnews.eclipse.mmt&t=5">[search]</a>
+		            <a href="http://www.eclipse.org/newsportal/thread.php?group=eclipse.mmt">[web interface]</a>
 				</li>
 				<li>
-	                <a href="http://dev.eclipse.org/mailman/listinfo/m2m-dev">
-					m2m-dev@eclipse.org:</a> developer discussions
+	                <a href="http://dev.eclipse.org/mailman/listinfo/mmt-dev">mmt-dev@eclipse.org:</a> developer discussions
+					<a href="http://dev.eclipse.org/mhonarc/lists/mmt-dev/maillist.html">[archive]</a>
+	                <br>m2m-dev@eclipse.org: old developer discussions
 					<a href="http://dev.eclipse.org/mhonarc/lists/m2m-dev/maillist.html">[archive]</a>
 				</li>
 				<li>
-					<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.m2m/?root=Modeling_Project">M2M CVS</a>
+					<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.m2m/?root=Modeling_Project">MMT CVS</a>
    				</li>
 			</ul>
 		</div>
 
 		<div class="homeitem">
-			<h3>M2M components</h3>
+			<h3>MMT components</h3>
 			<ul>
 				<li>
 					<table width="100%">
@@ -178,7 +179,7 @@
 									<img src="/modeling/images/egg-icon.png" alt="Validation (Incubation) Phase"/>
 								</a>
 				                <b>Declarative QVT</b>:
-				                <a href="http://wiki.eclipse.org/M2M/Relational_QVT_Language_%28QVTR%29">Wiki</a>
+				                <a href="http://wiki.eclipse.org/MT/QVTd">Wiki</a>
 		  					</td>
 							<td align="right">
 							</td>
