@@ -60,7 +60,7 @@ ob_start();
 			<li>Wiki: <a href="http://wiki.eclipse.org/index.php/Category:EMF">EMF</a>, <a href="http://wiki.eclipse.org/index.php/EMFT">EMFT</a></li>
 			<li><a href="http://www.eclipse.org/modeling/emf/docs/misc/UsingUpdateManager/UsingUpdateManager.html">Using Update Manager</a></li>
 			<li><a href="http://www.eclipse.org/newsgroups">Eclipse newsgroups</a></li>
-			<li><a href="http://wiki.eclipse.org/index.php/EMFT_Procedures">MDT Build &amp; Promote</a></li>
+			<!--li><a href="http://wiki.eclipse.org/index.php/EMFT_Procedures">MDT Build &amp; Promote</a></li-->
 		</ul>
 	</div>
 	
@@ -88,4 +88,4 @@ $pageAuthor = "Neil Skrypuch";
 $App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="/modeling/includes/index.css"/>' . "\n");
 $App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>
-<!-- $Id: index.php,v 1.7 2012/05/19 18:08:29 ewillink Exp $ -->
+<!-- $Id: index.php,v 1.8 2012/05/19 18:19:21 ewillink Exp $ -->
