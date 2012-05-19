@@ -1,239 +1,91 @@
-<?php  																														require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php"); 	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php"); 	$App 	= new App();	$Nav	= new Nav();	$Menu 	= new Menu();		include($App->getProjectCommon());    # All on the same line to unclutter the user's desktop'
+<?php
+require_once($_SERVER["DOCUMENT_ROOT"] . "/modeling/includes/buildServer-common.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php"); require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php"); require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php"); $App = new App(); $Nav = new Nav(); $Menu = new Menu(); include($App->getProjectCommon());
 
-	#*****************************************************************************
-	# 
-	# Author: 		Freddy Allilaire
-	# Date:			2007-01-11
-	#
-	#****************************************************************************
-	
-	#
-	# Begin: page-specific settings.  Change these. 
-	$pageTitle 		= "Model To Model Transformation (MMT)";
-	$pageKeywords	= "MMT, Model transformation, Model, Transformation, MDE, MDD, MDA, Modeling";
-	$pageAuthor		= "Freddy Allilaire";
-	 
-	# Add page-specific Nav bars here
-	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
-	# $Nav->addNavSeparator("My Page Links", 	"downloads.php");
-	# $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
-	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
+require($_SERVER["DOCUMENT_ROOT"] . "/modeling/includes/db.php");
 
-	# End: page-specific settings
-	#
-	
-	include('news/scripts/news.php');
-	$mmtnews = get_mmtnews(5);
-		
-	# Paste your HTML content between the EOHTML markers!	
-	$html = <<<EOHTML
-
-	<!-- Middle part -->
-	<div id="midcolumn">
-		<table width="100%">
-			<tr>
-				<td width="80%">
-					<h1>$pageTitle</h1>
-					<p align="JUSTIFY">
-						Model-to-Model Transformation is a key aspect of Model-Driven Development (MDD).
-					</p>
-					<p align="JUSTIFY">
-						The MMT project hosts Model-to-Model Transformation languages. 
-						Transformations are executed by transformation engines that are plugged into the Eclipse Modeling infrastructure.
-						MMT is a subproject of the top-level <a href="http://www.eclipse.org/modeling/">Eclipse Modeling Project</a>.
-					</p>
-					<p align="JUSTIFY">
-						The MMT transformation projects and languages are:
-						<ul>
-							<li><a href="http://www.eclipse.org/projects/project_summary.php?projectid=modeling.mmt.atl">ATL Transformation Language</a></li>
-							<ul>
-								<li>ATL</li>
-							</ul>
-							<li><a href="http://www.eclipse.org/projects/project.php?id=modeling.mmt.qvt-relations">QVTd (Declarative)</a></li>
-							<ul>
-								<li>QVTc (Core)</li>
-								<li>QVTr (Relational)</li>
-							</ul>
-							<li><a href="http://www.eclipse.org/projects/project_summary.php?projectid=modeling.mmt.qvt-oml">QVT Operational (Procedural)</a></li>
-							<ul>
-								<li>QVTo (Operational)</li>
-							</ul>
-						</ul>
-						Other Eclipse Model-to-Model Transformation projects are:
-						<ul>
-							<li><a href="http://www.eclipse.org/projects/project.php?id=modeling.emft.epsilon">Epsilon</a></li>
-							<li><a href="http://www.eclipse.org/projects/project.php?id=modeling.gmt.viatra2">Viatra2</a></li>
-							<li>Xtend2</li>
-						</ul>
-					</p>
-		  		</td>
-			</tr>
-		</table>
-		
-		<hr/>
-		
-		<div class="homeitem">
-			<h3>Quick links</h3>
-			<ul>
-				<li>
-					<table width="100%">
-						<tr>
-							<td width="80%" valign="bottom">
-								<b><a href="http://www.eclipse.org/mmt/downloads/index.php">Downloads</a></b>
-		  					</td>
-							<td align="right">
-								<a href="http://www.eclipse.org/mmt/downloads/index.php">
-								<img align="right" src="resources/images/download.gif" /></a>
-							</td>
-						</tr>
-					</table>
-				</li>
-
-				<li>
-					<table width="100%">
-						<tr>
-							<td width="80%" valign="bottom">
-								<b><a href="doc/">Documentation</a></b>,
-								<a href="http://wiki.eclipse.org/index.php/MMT">Wiki</a>
-		  					</td>
-							<td align="right">
-								<a href="doc/">
-								<img align="right" src="resources/images/reference.gif" /></a>
-							</td>
-						</tr>
-					</table>
-				</li>
-				<li>
-	                <a href="news://news.eclipse.org/eclipse.mmt"> users newsgroup:</a> users discussions and support
-					<a href="http://dev.eclipse.org/newslists/news.eclipse.mmt/maillist.html">[archive]</a>
-		            <a href="http://www.eclipse.org/search/search.cgi?form=extended&ul=%2Fnewslists%2Fnews.eclipse.mmt&t=5">[search]</a>
-		            <a href="http://www.eclipse.org/newsportal/thread.php?group=eclipse.mmt">[web interface]</a>
-				</li>
-				<li>
-	                <a href="http://dev.eclipse.org/mailman/listinfo/mmt-dev">mmt-dev@eclipse.org:</a> developer discussions
-					<a href="http://dev.eclipse.org/mhonarc/lists/mmt-dev/maillist.html">[archive]</a>
-	                <br>m2m-dev@eclipse.org: old developer discussions
-					<a href="http://dev.eclipse.org/mhonarc/lists/m2m-dev/maillist.html">[archive]</a>
-				</li>
-				<li>
-					<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.m2m/?root=Modeling_Project">MMT CVS</a>
-   				</li>
-			</ul>
-		</div>
-
-		<div class="homeitem">
-			<h3>MMT components</h3>
-			<ul>
-				<li>
-					<table width="100%">
-						<tr>
-							<td width="80%" valign="bottom">
-								<a href="http://www.eclipse.org/projects/what-is-incubation.php">
-									<img src="/modeling/images/egg-icon.png" alt="Validation (Incubation) Phase"/>
-								</a>
-				                <b>Infrastructure</b>
-		  					</td>
-							<td align="right">
-							</td>
-						</tr>
-					</table>
-				</li>
-				<li>
-					<table width="100%">
-						<tr>
-							<td width="80%" valign="bottom">
-				                <b><a href="atl/">ATL</a></b>:
-   				                <a href="atl/usecases/">Use Cases</a>,
-				                <a href="atl/atlTransformations/">ATL Transformations</a>,
-				                <a href="atl/doc/">Documentation</a>,
-				                <a href="atl/download/">Download</a>
-		  					</td>
-							<td align="right">
-								<a href="atl/"><img align="right" src="atl/resources/atlLogoSmall.png" /></a>
-							</td>
-						</tr>
-					</table>
-				</li>
-				<li>
-					<table width="100%">
-						<tr>
-							<td width="80%" valign="bottom">
-				                <b>Operational QVT</b>:
-				                <a href="http://wiki.eclipse.org/M2M/Operational_QVT_Language_%28QVTO%29">Wiki</a>,
-				                <a href="qvto/doc">Documentation</a>,
-				                <br>
-				                <!--  <i><a href="http://download.eclipse.org/modeling/m2m/qvto/downloads/index.php">Archive of Regular Builds</a></i>, -->
-				                <a href="http://www.eclipse.org/modeling/m2m/downloads/index.php?project=qvtoml">Download</a>
-		  					</td>
-							<td align="right">
-								<a href="http://wiki.eclipse.org/M2M/Operational_QVT_Language_%28QVTO%29"><img align="right" src="qvto/QVTo.PNG" /></a>
-							</td>
-						</tr>
-					</table>
-				</li>
-				<li>
-					<table width="100%">
-						<tr>
-							<td width="80%" valign="bottom">
-								<a href="http://www.eclipse.org/projects/what-is-incubation.php">
-									<img src="/modeling/images/egg-icon.png" alt="Validation (Incubation) Phase"/>
-								</a>
-				                <b>Declarative QVT</b>:
-				                <a href="http://wiki.eclipse.org/MT/QVTd">Wiki</a>
-		  					</td>
-							<td align="right">
-							</td>
-						</tr>
-					</table>
-				</li>
-			</ul>
-		</div>
-		<hr class="clearer" />
-	</div>
-
-	<!-- Right Part -->
-	<div id="rightcolumn">
-<!--
-		<div class="sideitem">
-			<h6>Getting Started</h6>
-			<ul>
-				<li><a href="doc/">Documentation</a></li>
-				<li><a href="download/">Download</a></li>
-				<li><a href="http://wiki.eclipse.org/index.php/M2M">Wiki</a></li>
-			</ul>
-		</div>
--->
-		<div class="sideitem">
-			$mmtnews
-		</div>
-	
-		<div class="sideitem">
-			<h6>Incubation</h6>
-			<p>Some components are currently in their <a href="http://www.eclipse.org/projects/dev_process/validation-phase.php">Validation (Incubation) Phase</a>.</p> 
-			<div align="center"><a href="http://www.eclipse.org/projects/what-is-incubation.php">
-				<img align="center" src="http://www.eclipse.org/images/egg-incubation.png" border="0" /></a>
-			</div>
-		</div>
-
-<!--
-		<div class="sideitem">
-			<h6>Select your theme.</h6>
-			<form method="post">
-				<input type="radio" name="theme" value="Phoenix" /> Phoenix<br />
-				<input type="radio" name="theme" value="Miasma" /> Miasma<br />
-				<input type="radio" name="theme" value="Industrial" /> Industrial<br />
-				<input type="radio" name="theme" value="Blue" /> Blue<br />
-				<input type="radio" name="theme" value="Lazarus" /> Lazarus<br />
-				<input type="submit" value="Set" />
-			</form>
-		</div>
--->
-	</div>
-
-EOHTML;
-
-
-	# Generate the web page
-	$App->AddExtraHtmlHeader("<link rel='alternate' type='application/rss+xml' title='MMT News' href='news/mmtNewsArchive.rss'>");
-	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+ob_start();
 ?>
+
+<div id="midcolumn">
+	<h1>Model to Model Transformation (MMT)</h1>
+	<?php
+	include($_SERVER["DOCUMENT_ROOT"] . "/modeling/includes/index-common.php");
+	?>
+</div>
+
+<div id="rightcolumn">
+	<div class="sideitem">
+	   <h6>Incubation</h6>
+	   <p>Some components are currently in their <a href="http://www.eclipse.org/projects/dev_process/validation-phase.php">Validation (Incubation) Phase</a>.</p> 
+	   <div align="center"><a href="http://www.eclipse.org/projects/what-is-incubation.php"><img 
+	        align="center" src="http://www.eclipse.org/images/egg-incubation.png" 
+	        border="0" /></a></div>
+	   <!-- <div align="center"><a href="http://www.eclipse.org/projects/what-is-incubation.php"><img 
+	        align="center" src="/modeling/images/eclipse_incubation_v2.png" 
+	        border="0" /></a><br/>&#160;</div> -->
+	 </div>
+ 
+	<div class="sideitem">
+		<h6>News</h6>
+		<?php getNews(4, "whatsnew"); ?>
+		<ul>
+			<li><a href="/<?php print $PR; ?>/news-whatsnew.php">Older news</a></li>
+		</ul>
+	</div>
+
+	<div class="sideitem">
+		<h6><a href="/modeling/mdt/feeds/"><img style="float:right" alt="Build Feeds" src="/modeling/images/rss-atom10.gif"/></a>
+		<?php echo $tmp && array_key_exists($proj,$tmp) && $tmp[$proj] ? $tmp[$proj] . " " : ""; ?>Build News</h6>
+		<?php build_news($cvsprojs, $cvscoms, $proj); ?>
+		<ul>
+			<li><a href="/<?php print $PR; ?>/news-whatsnew.php#build">Other build news</a></li>
+		</ul>
+	</div>
+
+	<div class="sideitem">
+		<h6>Modeling Corner</h6>
+		<p>Want to <a href="http://wiki.eclipse.org/index.php/Modeling_Corner">contribute</a> models, projects, files, ideas, utilities, or code to 
+		<a href="http://www.eclipse.org/modeling/mdt/">MDT</a> or any other part of the <a href="http://www.eclipse.org/modeling/">Modeling Project</a>? 
+		Now you can!</p>
+		<p>Have a look, post your comments, submit a link, or just read what others have written. <a href="http://wiki.eclipse.org/index.php/Modeling_Corner">Details here</a>.</p>
+	</div>
+
+	<a name="related"></a>
+	<div class="sideitem">
+		<h6>Related links</h6>
+		<ul>
+			<li><a href="http://www.eclipse.org/modeling">Eclipse Modeling</a></li>
+			<li>Web: <a href="http://www.eclipse.org/emf">EMF</a>, <a href="http://www.eclipse.org/emft">EMFT</a></li>
+			<li>Wiki: <a href="http://wiki.eclipse.org/index.php/Category:EMF">EMF</a>, <a href="http://wiki.eclipse.org/index.php/EMFT">EMFT</a></li>
+			<li><a href="http://www.eclipse.org/modeling/emf/docs/misc/UsingUpdateManager/UsingUpdateManager.html">Using Update Manager</a></li>
+			<li><a href="http://www.eclipse.org/newsgroups">Eclipse newsgroups</a></li>
+			<li><a href="http://wiki.eclipse.org/index.php/EMFT_Procedures">MDT Build &amp; Promote</a></li>
+		</ul>
+	</div>
+	
+	<?php
+	if ($isEMFserver)
+	{
+		$file = $_SERVER["DOCUMENT_ROOT"] . "/modeling/includes/actions-common.php";
+		if (is_file($file) && is_readable($file))
+		{
+			include($file);
+		}
+	}
+	?>
+
+</div>
+
+<?php
+$html = ob_get_contents();
+ob_end_clean();
+
+$pageTitle = "Eclipse Modeling - MDT - Home";
+$pageKeywords = ""; // TODO: add something here
+$pageAuthor = "Neil Skrypuch";
+
+$App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="/modeling/includes/index.css"/>' . "\n");
+$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+?>
+<!-- $Id: index.php,v 1.7 2012/05/19 18:08:29 ewillink Exp $ -->
