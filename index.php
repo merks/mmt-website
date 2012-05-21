@@ -81,11 +81,11 @@ ob_start();
 $html = ob_get_contents();
 ob_end_clean();
 
-$pageTitle = "Eclipse Modeling - MDT - Home";
+$pageTitle = "Eclipse Modeling - MMT - Home";
 $pageKeywords = ""; // TODO: add something here
 $pageAuthor = "Neil Skrypuch";
 
 $App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="/modeling/includes/index.css"/>' . "\n");
 $App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>
-<!-- $Id: index.php,v 1.8 2012/05/19 18:19:21 ewillink Exp $ -->
+<!-- $Id: index.php,v 1.9 2012/05/21 13:45:21 ewillink Exp $ -->

@@ -20,7 +20,7 @@ $mailinglists = array("MMT (main)" => array("mmt.dev"));
 foreach ($projects as $name => $suf) {
 	if (!isset($nomailinglist) || !in_array($suf, $nomailinglist))
 	{
-		$mailinglists[$name] = array("mdt-".$suf.".dev");
+		$mailinglists[$name] = array("mmt-".$suf.".dev");
 	}
 }
 #array_unshift($mailinglists["XSD"],"emf-dev"); /* override */
