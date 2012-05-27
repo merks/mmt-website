@@ -1,1 +1,1 @@
-<?php header("Location: /mmt/qvtd"); ?>
+<?php header("Location: /projects/project.php?id=modeling.mmt.qvtd"); ?>
