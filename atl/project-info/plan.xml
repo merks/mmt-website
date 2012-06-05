@@ -2,10 +2,10 @@
 <?xml-stylesheet type="text/xsl" href="http://www.eclipse.org/projects/project-plan.xsl"?>
 <plan plan-format="1.0" xmlns="http://www.eclipse.org/project/plan" xmlns:html="http://www.w3.org/1999/xhtml"
 		name="ATL">
-	<release projectid="modeling.m2m.atl" version="3.3.0" />
+	<release projectid="modeling.mmt.atl" version="3.3.0" />
 	<introduction>
 		<html:div>This document lays out the feature and API set for the
-			3.3 release of the ATL project, of the Eclipse M2M Project.
+			3.3 release of the ATL project, of the Eclipse MMT Project.
 		</html:div>
 	</introduction>
 	<release_deliverables>
