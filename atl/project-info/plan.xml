@@ -124,7 +124,7 @@ Version numbers are subject to change should there be be any additional maintena
 			</html:p>
 			</description>
 				<committed
-     			bugzilla="https://bugs.eclipse.org/bugs/show_bug.cgi?id=345414">
+     			bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=specific&amp;order=relevance+desc&amp;bug_status=__all__&amp;product=MMT.ATL&amp;content=EMFTVM">
      	</committed>
 		</theme>
 	</themes_and_priorities>
