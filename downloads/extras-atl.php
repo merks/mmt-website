@@ -1,16 +1,15 @@
 <?php
 
 $oldrels = array(
-
 	"3.2.0" => array("2011/06/08","http://archive.eclipse.org/mmt/atl/downloads/drops/3.2.0/R201106080518/m2m-atl-Update-3.2.0.zip"),
-	"3.1.1" => "201009141132",
-	"3.1.0" => "201006150240",
-	"3.0.2" => "201003150627",
-	"3.0.1" => "200909220532",
-	"3.0.0" => "200906220943",
-	"2.0.2" => "200812191010",
-	"2.0.1" => "200809170426",
-	"2.0.0" => "200806101117"
+	"3.1.1" => array("2010/09/14","http://archive.eclipse.org/mmt/atl/downloads/drops/3.1.1/R201009141132/m2m-atl-Update-3.1.1.zip"),
+	"3.1.0" => array("2010/06/15","http://archive.eclipse.org/mmt/atl/downloads/drops/3.1.0/R201006150240/m2m-atl-Update-3.1.0.zip"),
+	"3.0.2" => array("2010/03/15","http://archive.eclipse.org/mmt/atl/downloads/drops/3.0.2/R201003150627/m2m-atl-Update-3.0.2.zip"),
+	"3.0.1" => array("2009/09/22","http://archive.eclipse.org/mmt/atl/downloads/drops/3.0.1/R200909220532/m2m-atl-Update-3.0.1.zip"),
+	"3.0.0" => array("2009/06/22","http://archive.eclipse.org/mmt/atl/downloads/drops/3.0.0/R200906220943/m2m-atl-Update-3.0.0.zip"),
+	"2.0.2" => array("2008/12/19","http://archive.eclipse.org/mmt/atl/downloads/drops/2.0.2/R200812191010/m2m-atl-Update-2.0.2.zip"),
+	"2.0.1" => array("2008/09/17","http://archive.eclipse.org/mmt/atl/downloads/drops/2.0.1/R200809170426/m2m-atl-Update-2.0.1.zip"),
+	"2.0.0" => array("2008/06/10","http://archive.eclipse.org/mmt/atl/downloads/drops/2.0.0/R200806101117/m2m-atl-Update-2.0.0.zip")
 );
 
 function showNotes()
