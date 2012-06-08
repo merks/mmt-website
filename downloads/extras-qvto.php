@@ -1,7 +1,7 @@
 <?php
 
 $oldrels = array(
-	"3.1.0" => "201106270651",
+//	"3.1.0" => "201106270651",
 	"3.0.0" => "201006151231",
 	"2.0.1a" => array("2010/01/22", "http://archive.eclipse.org/mmt/qvto/downloads/drops/2.0.1/M201001221708/"),	// explicit URL to show M
 	"2.0.1" => "200909011247",
