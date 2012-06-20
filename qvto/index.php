@@ -1,1 +1,1 @@
-<?php header("Location: /mmt/qvto/"); ?>
+<?php header("Location: http://www.eclipse.org/projects/project.php?id=modeling.mmt.qvt-oml"); ?>
