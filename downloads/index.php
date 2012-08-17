@@ -56,7 +56,7 @@ $filePre = array(
 	/* "/newproj" => array("mmt-newproj"), */
 	"/atl" => array("m2m-atl","mmt-atl"),
 	"/qvtd" => array("m2m-qvtd","mmt-qvtd"),
-	"/qvto" => array("m2m-qvtoml","mmt-qvtoml")
+	"/qvto" => array("m2m-qvtoml","mmt-qvtoml","mmt-qvto")
 );
 
 /* define showNotes(), $oldrels, doLanguagePacks() in extras-$proj.php (or just extras.php for flat projects) if necessary, downloads-common.php will include them */
