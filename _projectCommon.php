@@ -45,7 +45,7 @@ $cvscoms = array (
 $aboutcoms = array (
 		"atl" => ".atl",
 		"qvtd" => ".qvtd",
-		"qvto" => ".qvto"
+		"qvto" => ".qvt-oml"
 		/* add more here */
 );
 
