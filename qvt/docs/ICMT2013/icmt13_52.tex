@@ -1,0 +1,65 @@
+%=======================================================================
+% Copyright (c) 2012 The University of York and Willink Transformations.
+%
+% $Id: icmt13_52.tex 4506 2013-02-12 16:45:23Z hhoyos@CS.YORK.AC.UK $
+%=======================================================================
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{upquote}
+
+%
+\begin{document}
+\input{oclListings}
+\input{qvtcListings}
+\lstset{
+basicstyle=\scriptsize,
+tabsize=4,
+% Numbering
+numbers=left, numberstyle=\tiny, numbersep=5pt}
+
+\mainmatter              % start of the contributions
+%
+%\title{Towards an extended family of QVT languages}
+\title{QVT Imperative - A practical semantics for declarative transformations}
+%
+\author{Horacio Hoyos \and Dimitris Kolovos\inst{1} \and Edward Willink\inst{2}}
+%
+\institute{The University of York, York, UK,\\
+\email{horacio.hoyos.rodriguez@ieee.org, dimitris.kolovos@york.ac.uk},\\
+\and
+Willink Transformations Ltd., Reading, UK \\
+\email{ed@willinktransformations.co.uk}}
+
+\maketitle              % typeset the title of the contribution
+
+\input{abstract}
+
+%\input{Outline}
+
+\input{introduction}
+
+\input{motivation}
+
+\input{QVTcore}
+
+%\input{subsetLanguages}
+
+\input{QVTi}
+
+\input{relatedwork}
+
+%\input{virtualMachine}
+
+\input{conclusions}
+
+%
+% ---- Bibliography ----
+%
+\bibliographystyle{splncs03}
+\bibliography{hhr502References}
+
+\end{document}

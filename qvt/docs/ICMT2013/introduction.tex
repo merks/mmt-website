@@ -1,0 +1,23 @@
+%=======================================================================
+% Copyright (c) 2012 The University of York and Willink Transformations.
+%
+% $Id: introduction.tex 4512 2013-02-12 20:47:04Z hhoyos@CS.YORK.AC.UK $
+%=======================================================================
+\section{Introduction}
+The importance and benefits of standardisation are widely recognised in all engineering disciplines. In the domain of Model Driven Engineering, the OMG has provided a set of standards related to modelling and model management. One of these standards is the Query/View/Transformation (QVT) specification\cite{QVT1.1} that addresses the task of model transformation. Although the QVT Request For Proposals (RFP)\cite{QVT-RFP}  in 2002 attracted 8 submissions, ten years later the initial enthusiasm has failed to mature into any commercial implementations.
+
+The RFP called for one transformation language, but the submitters could not agree whether an  imperative or declarative approach should be used, and so a compromise between the two viewpoints was resolved by specifying three languages. Three languages might seem like a typical committee outcome, however in this paper we run with this compromise and start to argue for six languages.
+
+The QVT Operational Mappings language (QVTo) supports an imperative form of model transformation and is the most successful with two Open Source implementations available; SmartQVT and the QVT Operational project at Eclipse. The most recent release of SmartQVT was in 2008. Eclipse QVTo was originally developed by Borland, and after a three year lull is again under active maintenance and development.
+
+The QVT Relations (QVTr) language provides powerful multi-directional declarative transformation capabilities. It has two implementations. Medini QVT is Open Source, provides a partial implementation but does not appear to be progressing. Performance results have been very disappointing \cite{Bosems2011}. ModelMorf is proprietary but the freely available Beta releases have not matured into a product.
+
+The QVT Core (QVTc) language provides much simpler multi-directional declarative capabilities. The internal submission prototype at Compuware was never updated to match the specification and so QVTc has never had an implementation.
+
+At Eclipse, the QVT Declarative project has provided editors, parsers and models for QVTr and QVTc but no execution capability. This paper describes ongoing activity towards remedying the execution deficiencies.
+
+The two-level declarative approach adopted by the QVT specification provides powerful abstractions but no obvious way to realize them. For efficient execution we want a highly optimized imperative representation that we call QVT Imperative (QVTi). Following the QVT specification's suggestion that QVTr should be realized by a program-to-program transformation to QVTc, we propose a program-to-program transformation from QVTc to QVTi. This transformation will be realized as a chain of three program-to-program transformations from QVTc via QVT Unidirectional (QVTu) and QVT Minimal (QVTm) to QVTi. In a future paper, we will discuss the QVTc to QVTi transformations and the QVTu and QVTm languages. In this paper, we concentrate on the QVTi semantics, its execution and the reuse of QVTc concrete syntax for QVTi (and QVTm and QVTu).
+
+It should be noted that the QVT 1.1 specification failed to address any of the issues raised against QVTc in the QVT draft or 1.0 specification, and since no prototype of QVTc has been produced anywhere, we have to treat the precise wording of the QVT specification with a little scepticism. We therefore work to what we perceive to be the spirit rather than the letter of the specification. Our tooling introduces a QVTo-like import statement for the QVTc  metamodels, including the middle metamodel.
+
+In this paper we present the motivation for the three new QVTc subset languages in section \ref{sec:motivation} and an overview of QVTc in section \ref{sec:qvtcore}. The details of QVTi are presented in section \ref{sec:qvti}, with related work presented in section \ref{sec:related}. Finally, section \ref{sec:concandfuture} concludes.
