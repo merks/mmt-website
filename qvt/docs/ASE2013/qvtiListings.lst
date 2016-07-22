@@ -1,0 +1,61 @@
+\begin{lstlisting}[language=qvtc,label=lsting:QVTiExample,caption={QVTi mappings of colored nodes.}]
+-- Mapping root nodes Left to Middle
+map HSV2MiddleRoot in ColorChanger {
+	hsv() { hsvRoot : HSVNode | hsvRoot.parent = null;} 
+	where() {
+		realize middleRoot : HSVNode2HLSNode |
+		middleRoot.hsv := hsvRoot;
+		middleRoot.rgb := hsv2rgb(hsvRoot.hsv);
+	}
+	-- recursive call to visit children
+	map HSV2MiddleRecursion {
+		hsvNode <= hsvRoot.children;
+		middleParent := middleRoot;
+	}
+	-- invoke middle to output mapping
+	map Middle2HLSRoot {		
+		middleNode := middleRoot;
+	}
+}
+-- Mapping child nodes Left to Middle
+map HSV2MiddleRecursion in ColorChanger { 
+	hsv(hsvNode : HSVNode | ) {}
+	where(middleParent : HSVNode2HLSNode | ) {
+		realize middleNode : HSVNode2HLSNode |
+		middleNode.parent := middleParent;
+		middleNode.hsv := hsvNode;
+		middleNode.rgb := hsv2rgb(hsvNode.hsv);
+	}
+	-- recursive call to visit children
+	map HSV2MiddleRecursion {		
+		hsvNode <= hsvNode.children;
+		middleParent := middleNode;
+	}
+}
+-- Mapping root nodes Middle to Right
+map Middle2HLSRoot in ColorChanger { 
+	enforce hls() { realize hlsNode : HLSNode | }
+	where(middleNode : HSVNode2HLSNode) {
+		middleNode.hls := hlsNode;
+		hlsNode.parent := null;
+		hlsNode.hls := rgb2hls(middleNode.rgb);
+	}
+	-- recursive call to visit children
+	map Middle2HLSRecursion {		
+		middleNode <= middleNode.children;
+	}
+}
+-- Mapping child nodes Middle to Right
+map Middle2HLSRecursion in ColorChanger { 
+	enforce hls() { realize hlsNode : HLSNode | }
+	where(middleNode : HSVNode2HLSNode |) {
+		middleNode.hls := hlsNode;
+		hlsNode.parent := middleNode.parent.hls;
+		hlsNode.hls := rgb2hls(middleNode.rgb);
+	}
+	-- recursive call to visit children
+	map Middle2HLSRecursion {		
+		middleNode <= middleNode.children;
+	}
+}
+\end{lstlisting}

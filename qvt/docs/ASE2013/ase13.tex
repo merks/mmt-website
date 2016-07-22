@@ -1,0 +1,72 @@
+%=======================================================================
+% Copyright (c) 2012 The University of York and Willink Transformations.
+%
+% $Id: ase13.tex 5446 2013-05-15 21:58:28Z ed@willink.me.uk $
+%=======================================================================
+\documentclass[conference]{IEEEtran}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{multicol}
+%\usepackage{upquote}
+
+%
+\begin{document}
+\input{oclListings}
+\input{qvtcListings}
+\lstset{
+basicstyle=\scriptsize,
+tabsize=4,
+% Numbering
+numbers=left, numberstyle=\tiny, numbersep=5pt}
+
+%
+\title{QVT Imperative - A practical foundation for declarative transformation execution}
+%
+\author{\IEEEauthorblockN{Horacio Hoyos}
+\IEEEauthorblockA{Department of Computer Science\\
+The University of York\\
+York, UK\\
+Email: horacio.hoyos.rodriguez@ieee.org}
+\and 
+\IEEEauthorblockN{Dimitris Kolovos}
+\IEEEauthorblockA{Department of Computer Science\\
+The University of York\\
+York, UK\\
+Email: dimitris.kolovos@york.ac.uk}
+\and
+\IEEEauthorblockN{Edward Willink}
+\IEEEauthorblockA{Willink Transformations Ltd.\\
+Reading, UK \\
+Email: ed@willinktransformations.co.uk}}
+
+\maketitle              % typeset the title of the contribution
+
+\input{abstract}
+
+%\input{Outline}
+
+\input{introduction}
+
+\input{motivation}
+
+\input{QVTcore}
+
+%\input{subsetLanguages}
+
+\input{QVTi}
+
+\input{relatedwork}
+
+%\input{virtualMachine}
+
+\input{conclusions}
+
+%
+% ---- Bibliography ----
+%
+\bibliographystyle{IEEEtran}
+\bibliography{hhr502References}
+
+\end{document}

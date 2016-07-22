@@ -1,0 +1,33 @@
+%=======================================================================
+% Copyright (c) 2012 The University of York and Willink Transformations.
+%
+% $Id: introduction.tex 5454 2013-05-17 09:47:03Z hhoyos@CS.YORK.AC.UK $
+%=======================================================================
+\section{Introduction}
+The importance and benefits of standardization are widely recognized in all engineering disciplines. In the domain of Model Driven Engineering, the Object Management Group (OMG)  has provided a set of standards related to modeling and model management. One of these standards is the Query/View/Transformation (QVT) specification\cite{QVT1.1} that addresses the task of model transformation. Although the QVT Request For Proposals (RFP)\cite{QVT-RFP} in 2002 attracted 8 submissions, ten years later the initial enthusiasm has failed to mature into any commercial implementations.
+
+The RFP called for one transformation language, but the submitters could not agree whether an imperative or declarative approach should be used, and so a compromise between the two viewpoints was resolved by specifying three languages. The QVT Operational Mappings language (QVTo) supports an imperative form of model transformation. The QVT Relations (QVTr) language provides powerful multi-directional declarative transformation capabilities and the QVT Core (QVTc) language provides much simpler multi-directional declarative capabilities. 
+
+%Few implementations  to provide execution of these languages exist, with work on QVTr reaming mostly academic and no implementations for QVTc. At Eclipse, the QVT Declarative project has provided editors, parsers and models for QVTr and QVTc but no execution capability.
+
+% Three languages might seem like a typical committee outcome, however in this paper we run with this compromise and start to argue for six languages.
+
+% and is the most successful with two Open Source implementations available; 
+
+%SmartQVT and the QVT Operational project at Eclipse. The most recent release of SmartQVT was in 2008. Eclipse QVTo was originally developed by Borland, and after a three year lull is again under active maintenance and development.
+
+Unfortunately the available QVTr tools are limited. Medini QVT is Open Source, provides a partial implementation but does not appear to be progressing. Performance results have been very disappointing \cite{Bosems2011}. ModelMorf is proprietary but the available Beta releases have not matured into a product.
+
+For QVTc the situation is worse. The internal submission prototype at Compuware was never updated to match the specification and so QVTc has never had an implementation.
+
+At Eclipse, the QVT Declarative project provides editors, parsers and models for QVTr and QVTc but no execution. 
+
+This paper describes ongoing activity towards remedying these execution deficiencies. Our work is aligned with the compromise of multiple languages and argues for three more intermediate languages in order to provide an implementation that supports both QVTc and QVTr. 
+
+It should be noted that the QVT 1.1 specification failed to address any of the issues raised against QVTc in the QVT draft or 1.0 specification, and since no prototype of QVTc has been produced anywhere, we have to treat the precise wording of the QVT specification with a little skepticism. We therefore work to what we perceive to be the spirit rather than the letter of the specification.
+
+%The two-level declarative approach adopted by the QVT specification provides powerful abstractions but no obvious way to realize them. 
+
+% Our tooling introduces a QVTo-like import statement for the QVTc  metamodels, including the middle metamodel.
+
+In this paper, section \ref{sec:motivation} presents the motivation for three new QVTc subset languages and the progressive transformation to QVTi, then section \ref{sec:qvtcore} provides an overview of QVTc. The details of QVTi are presented in section \ref{sec:qvti}, with related work presented in section \ref{sec:related}. Finally, section \ref{sec:concandfuture} concludes.

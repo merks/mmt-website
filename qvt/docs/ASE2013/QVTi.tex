@@ -1,0 +1,146 @@
+%=======================================================================
+% Copyright (c) 2012 The University of York and Willink Transformations.
+%
+% $Id: QVTi.tex 5455 2013-05-17 10:15:50Z ed@willink.me.uk $
+%=======================================================================
+\section{The QVT Imperative Language}\label{sec:qvti}
+The QVT Imperative (QVTi) language re-uses the principles and syntax of QVTc to provide an easily executable semantics that can be targeted by the program-to-program transformations shown in Figure \ref{fig:overview}, i.e., QVTi is intended to be a machine generated language rather than written by a programmer. The major simplifications of QVTi in comparison to QVTc are:
+\begin{itemize}
+\item Uni-directional (not multi-directional)
+\item Specific creation/update/check behavior (no check/enforce flexibility)
+\item No complex syntax such as refinement, or inheritance (no syntax sugar)
+\item No mappings have both source and target domains (no complex dataflow)
+\item Multiple mappings are executed sequentially (rather than declaratively)
+\item Nested mappings may be invoked directly (rather than declaratively)
+\end{itemize}
+
+These simplifications combine to support a simple mode of execution in which mappings are executed in sequence within simple loops. Nested mappings nest in a manner that allows a conventional execution stack to maintain the prevailing state of each search variable. The overall transformation is executed as a guarded depth-first search of the source and then middle model spaces. Where the guarded search matches, either the middle model element temporarily persists the context of the match, or a target model element is updated.
+
+The search strategy is defined by the program-to-program transformation that produces the QVTi program. As a minimum this producer must serialize mappings with multi-variable patterns so that sub-mappings re-use rather rediscover parent bindings. This serialization offers significant opportunities for optimization through the use of the known metamodels and optionally through profiling as well. It is very desirable for the search to iterate over easy navigation paths such as compositions and forward references. It is also desirable to search first over model elements that have strict guard conditions since these may result in early pruning of the search space. It is highly undesirable to perform whole model searches or traverse associations in an unnavigable direction. 
+
+We will demonstrate the simplified QVTi semantics by reworking the Listing \ref{lsting:QVTcExample} example in accordance with a user requirement to create an HLS model from an HSV model. The resulting mappings, shown in Listing \ref{lsting:QVTiExample}, are manually produced pending future work on the program-to-program transformation chain.
+
+\input{qvtiListings.lst}
+
+%The major simplifying semantics of QVTi involves decomposing the mappings for multi-variable patterns into multiple sub-mappings each of which introduces exactly one new pattern variable. variables extension patterns so that the conversion to QVTu simplifies the transformation to support just creation of HLS from of HSV. The conversion to QVTm flattens the refinements. Then the conversion to QVTi imposes a multi-pass search schedule, one pattern variable at a time. The search schedule is carefully chosen to exploit the metamodels, so that successive steps use easily navigable paths and early pruning of the search space by evaluating constraints as soon as their pattern variables are bound. Total model searches and unnavigable paths are avoided wherever possible. 
+
+The transformation starts with a potentially declarative match of the guard variable(s) of the first mapping to the `whole' model, from which  The \textit{GuardPattern} on line 2 of HSV2MiddleRoot selects the \textit{HSVNode} source without a parent.
+%Since the transformation is now solely executed from \textit{hsv} to \textit{hsl}, the \texttt{check} and \texttt{enforce} keywords have been removed.
+Where this  match is found, lines 5-7 realize an \textit{HSVNode2HLSNode} middle node and populate it with the source context and computed RGB value.
+
+The two nested mapping calls on lines 10-17 are then executed sequentially. Explicit mappings calls are the sole extension in QVTi. The target mapping is invoked with the guard variable to the left of each \texttt{:=} assignment bound to the value of an OCL expression, and the guard variable to the left of each \texttt{<=} assignment looping over each value of the collection-valued OCL expression.
+
+The \textit{HSV2MiddleRecursion} mapping is therefore invoked with its \textit{hsvNode} guard variable bound to each of the original source node's children, and its \textit{middleParent} bound to the realized middle node. The \textit{HSV2MiddleRecursion} realizes a corresponding middle node for each source node and recurses down the source tree.
+
+Once the \textit{HSV2MiddleRecursion} completes, the \textit{HSV2MiddleRoot} mapping resumes and invokes the \textit{Middle2HLSRoot} mapping, binding its \textit{middleNode} guard variable to the \textit{middleRoot} node. The \textit{Middle2HLSRoot} behaves in a very similar fashion realizing a target node and using the \textit{Middle2HLSRecursion} to build the target tree.
+%Notice in this case that since \textit{hls} is a target domain, the \texttt{enforce} keyword has been preserved.
+
+This simple example demonstrates the simplifications underlying QVTi and the one syntax extension to QVTc. With these reduced semantics QVTi still has the power to express important programming idioms.
+%In order to define this as a QVTc, rather than QVTi extension, we define the invocation on line 8, as providing bound search domains for the two guard variables of the \textit{HSV2MiddleRecursion} mapping named \textit{hsvNode} and \textit{middleParent}. Where collections are provided as the bound domains for non-collection guard variables, a distinct \texttt{mapping} invocation occurs for the Cartesian product of each variable from each bound domain. Guard variables not bound by the invocation are bound one element at a time to the whole model. This is a natural extension restricting the declarative search space of QVTc whereby every guard variable is bound to the whole model. For QVTi, we impose the reduced semantics that at most one bound domain may be a collection and no guard variables may be left unbound, thereby ensuring that the invocation involves at most a simple loop.
+
+
+\subsubsection{Sequencing and Passes}
+Sequential execution of multiple patterns within one pass or of multiple passes can be expressed by sequential nested mappings as in the \textit{HSV2MiddleRecursion} then \textit{HSV2MiddleRoot} sequencing.
+
+\subsubsection{Iteration and Recursion}
+Looping over multiple model elements is supported by a \textit{GuardPattern} variable bound to each element in turn of a collection of model elements as in the \textit{HSV2MiddleRecursion} over the children. Simple iteration loops may use nested \textit{mappings}. Recursive loops exploit a nested mapping that invokes a named mapping with bindings. This syntax extension short-circuits the total model search associated with a declarative exposition.  
+
+\subsubsection{Conditional Execution}
+Arbitrary OCL constraints may be used in the guards for each step of each iteration. The example is very regular so there is only a single `at the root' guard for the \textit{HSV2MiddleRoot} mapping.
+
+\subsubsection{Model Mutation}
+Model elements are created by the realized variable declarations in the bottom patterns. Arbitrary OCL queries define the value to be assigned to each model element, or the iteration domain of a nested mapping. These expressions appear to the right of \texttt{:=} or \texttt{<=} operators in the example.
+
+\subsubsection{Traceability}
+Traceability is provided by the middle model. This is user-defined and so allows the user to control how much information relating source and target is maintained. In a more complex example OCL expressions may navigate from source or target models to the middle model using the standard UML opposite navigation semantics.
+
+\subsubsection{Timing}
+Preparation of the optimized QVTi transformation as AST or compiled Java is a compile-time activity that may be performed ahead of time whenever the desired execution direction mode is also known ahead of time.
+
+
+%QVTi is a very small unidirectional imperative transformation language that is syntactically a subset of QVTm.  The intention of QVTi is to allow imperative constructs to be written in QVTc. This means that transformations will explicitly define the order of execution of mappings by limiting the number of unbound variables to one and by using nested mappings to support common imperative programming idioms. The limited semantics allow that a minimal extension of the OCL VM\cite{Willink2012} can be implemented to provide QVTi support. Current development demonstrated that the IOCL (imperative OCL) VM presented in Figure \ref{fig:overview} is no longer needed as the \textit{Type.createInstance} and \textit{Property.initValue} in the current OCL API are enough to provide the side effects required to modify or create elements in the candidate and middle models.  The example introduced in section \ref{sec:qvtcore} is useful to understand the effects of the progressive semantic restrictions that are introduced when mapping QVTc to QVTu to QVTm to QVTi. Listing \ref{lsting:QVTiExample} presents the Node to subtree transformation written in QVTi. 
+%: limited semantic bandwidth, if/switch/loop/seq/recurse/multi-pass idioms, minimal OCL VM change.
+
+%As required in QVTu, lets assume the user selected the subtree model as the output and an enforcement operation mode. The effect of this selection is that all \texttt{enforce} keywords are removed from the input domains, i.e., domains which associated model type is \textit{coloredTree} (see lines 12 and 25). Consequently, \texttt{check} keywords are removed from output domains, i.e., domains which associated model type is \textit{subTree} (see lines 43 and 55). Since in the original QVTc transformations there aren't any refinements, composition of mappings is not required.
+
+%Explicit order of execution is done by using nested mappings. Further, in QVTi execution order must follow a 3+ step sequence better described as:
+%\begin{verbatim}%Z
+%map {
+%  map input-to-middle {...}
+%  map middle-to-middle {...}
+%  map middle-to-output {...}
+%}
+%\end{verbatim}
+%Where several middle-to-middle mappings may be used. This is particularly useful for in-place transformations where the required information is first copied form the candidate model to the middle model and then used to create/update the candidate model. This guarantees that create/update operations do not affect \textit{checking} when the model is an input. Since there is a single root mapping and nested mappings are evaluated sequentially, there is only one execution order eliminating declarative execution. 
+
+%The other key aspect of QVTi is the limit of 1 unbound variable per mapping, as this restriction is useful when using mappings to build common programming idioms as presented next.
+
+%\begin{itemize}
+%\item In the original QVTc transformations the mapping for the input model defined two variables. In QVTi, since only one unbound variable is allowed, the original mapping is rewritten as a mapping that defines \texttt{pHT:HueTree} (line 12) with a nested mapping in which \texttt{cHT:HueTree} is introduced (line 25). 
+%\item A single variable introduced in a guard pattern is used to create an \textit{if} expression. This is the case of line 25-27 where \texttt{cHT:HueTree} is introduced but the MiddleBottomPattern and the nested map will only be evaluated if the \texttt{cHT.parent := pHT;} and \texttt{cHT.color := pHT.color;} conditions are met. Additionally, since the ColoredTree metamodel enumerates the possible colors, the set of possible values could be used to create a \textit{switch} statement by testing the cHT color attribute against a specific value , eg. \texttt{cHT.color := Color::red;}
+
+%\end{itemize}
+
+
+%Ideally the example should flow through so that the utility of the bulets is demonstrated
+
+%The foregoing semantic limitations support the following programming idioms
+%- sequential/nested execution
+%- if/switch
+%- loop iteration
+%- recursion
+%- multiple passes
+
+%again one paragraph each with as much reuse of the example as possible
+
+
+\subsection{Implementation}
+Some simple QVTi transformations have been implemented using the Eclipse QVTi editor and parser and the Eclipse OCL VM\cite{Willink2012}.
+
+The OCL VM offers two modes of execution, the simplest of which is interpreted. It comprises a simple tree-walking evaluator over the OCL AST. This evaluator is realized by an extensible EvaluationVisitor and so, since the QVTi AST is an extension of the OCL AST, it is sufficient to extend the OCL EvaluationVisitor to support the additional QVTi AST nodes.
+
+This proved to be surprisingly easy. It was not even necessary to add extensions for model mutation since the Eclipse OCL VM has a prototype type constructor implementation.\footnote{Type constructors extend the Tuple syntax to allow construction of fully initialized user objects as e.g. \texttt{Person\{name:='Me'; age:=20;\}.}
+}
+
+The API provides only two methods to create objects and to initialize fields. These were sufficient for the disciplined form of model mutation in QVTi. 
+%The extended IOCL VM with Imperative OCL functionality shown in  Figure \ref{fig:overview} has not been necessary for QVTi; it may yet prove necessary to fully integrate QVTo.
+
+The Eclipse OCL VM also offers a tree-walking code generator that produces a direct Java realization of OCL. This has been extended to support the additional QVTi AST nodes and so generates direct Java code for a QVTi transformation. 
+
+\subsection{Future Work}\label{Future Work}
+
+We will now discuss a number of complexities that we have glossed over so far.
+
+\subsubsection{Bootstrapping}
+
+The QVT specification assumes the existence of a QVTr capability in order to realize the QVTr to QVTc transformation. We propose to provide partial implementations of the QVTr to QVTi chain using ETL/Flock\cite{Paige.etal2009}. These bootstraps will be promoted to QVTu using a further ETL/Flock to QVTu transformation (also using ETL/Flock). The final promotion from QVTu to QVTc or QVTr will be manual.
+
+\subsubsection{Update/Check}
+
+A transformation may create or update target models or just check source models. These distinct modes of execution are resolved at the same time as multi-directionality; the transformation relationships are adjusted to reflect that user's requirements. In the case of a check or update transformation a reconciliation of multiple source models is synthesized. The QVTi implementation is simplified by only needing to execute the single required mode of execution.
+
+\subsubsection{In-Place Update}
+
+A QVTc transformation is amenable to in place execution since the middle model separates the source and target model accesses. It is only necessary to ensure that the generated QVTi schedule caches source accesses in the middle model before any target updates introduce conflicts.
+
+\subsubsection{Generality}
+
+Declarative rule matches provide arbitrary flexibility without efficiency, whereas the imperative QVTi schedule provides efficient realization only of metamodel guided rule sequences. However QVTi retains the ability to perform a brute force recursion over all possible rules, so there is no loss of generality. The ongoing research goal is to maximize the ability to exploit the metamodel.
+
+\subsubsection{Performance}
+
+Once the QVTr to QVTc to QVTi program-to-program transformations are in-place, we can look forward to a high performance direct Java realization of QVTr. And with QVTr in-place, the slightly verbose expositions of the QVTc and its subset languages can be ignored by users. Only transformation toolsmiths need use them to exploit their interchange opportunities.
+
+%What we do want is an inpractice section.
+
+%The OCL capabilities have been reused without change. Mutation was already available through type constructor support provision of Type.createInstance() and Propery.initValue(). The IOCL VM of Fig 1 is therefore not needed for declarative, but may be need for QVTo.
+
+%The OCL evaluator with its tree walking interpreter with (? 50 nodes) is easily extended for QVT Core where
+
+%Transformation ...
+%TypedModel is structural
+%Mapping ...
+%Domain ...
+%GuardPattern ...
+%BottomPattern ...
+%...

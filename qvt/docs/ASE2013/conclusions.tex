@@ -1,0 +1,10 @@
+%=======================================================================
+% Copyright (c) 2012 The University of York and Willink Transformations.
+%
+% $Id: conclusions.tex 5456 2013-05-17 10:38:39Z hhoyos@CS.YORK.AC.UK $
+%=======================================================================
+\section{Conclusions}\label{sec:concandfuture}
+
+We have proposed a simple unidirectional imperative language, QVTi, that provides a feasible implementation. Further, we propose two more languages (QVTu and QVTm) and a progressive program-to-program transformation chain from QVTr to QVTc to QVTu to QVTm to QVTi, in order to provide a practical execution semantics for QVTc and QVTr. We have introduced the QVT Imperative (QVTi) language and presented its syntax and semantics. We have demonstrated that QVTi may retain the basic QVTc concrete syntax and yet support useful idioms for optimized pattern matching strategies and multiple passes. Our preliminary QVTi implementations demonstrate that the Eclipse OCL VM interpreter is easily extended for QVTi. We can therefore look to exploit the Eclipse OCL VM's Java code generator to provide good quality compiled Java code and then concentrate on the QVTr to QVTi program-to-program transformations to provide effective execution strategies.
+
+%QVTu may be an appropriate entry point at which other declarative transformation languages such as ATL, Epsilon or Viatra2 reuse a shared transformation framework.
