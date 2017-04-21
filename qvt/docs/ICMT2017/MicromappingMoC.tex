@@ -48,21 +48,21 @@ The Eclipse QVTd project \cite{Eclipse-QVTd} has provided QVTc and QVTr editors 
 
 UMLX \cite{UMLX} was proposed a little before QVT \cite{QVT-1.0}. UMLX extends UML-like object diagrams to specify the object patterns to be transformed. However three successive implementation attempts for UMLX foundered on the lack of an execution capability. UMLX and QVTr have now evolved to share some fairly obvious declarative principles enabling the Eclipse QVTd project to offer graphical UMLX as an interchangeable syntax for textual QVTr.
 
-This paper describes the many stages of analysis and transformation that enable UMLX, QVTr and QVTc to be executed either in an interpreted form or after generation of direct Java code. In Section~\ref{Background}, we contrast an imperative Function with a declarative Mapping\footnote{A Mapping is also known as a Relation or a Rule} before identifying a Micromapping and its inter-Connection as the basis for the compile-time analysis described in Section~\ref{Analysis}. Section~\ref{Results} presents some results, Section~\ref{Related Work} related work and Section~\ref{Status} the current status. Section~\ref{Conclusion} concludes.
+This paper describes the analyses and transformations that solve the problem; convert UMLX, QVTr and QVTc declarative forms to an optimized imperative representation suitable for interpreted or code generated execution. In Section~\ref{Background}, we contrast an imperative Procedure with a declarative Mapping\footnote{A Mapping is also known as a Relation or a Rule} before introducing a Micromapping and its inter-Connection as the basis for the compile-time analysis described in Section~\ref{Analysis}. Section~\ref{Results} presents some results, Section~\ref{Related Work} related work and Section~\ref{Status} the current status. Section~\ref{Conclusion} concludes.
 
 \section{Background}\label{Background}
 
-The familiar way in which a function interacts with its caller and objects is shown at the left of Fig~\ref{fig:FunctionContext}. The example function receives a $param1$ parameter value from its caller, and executes, using the parameter to identify $object1$, whose $slot1$ references an $object2$ whose $slot3$ contributes to some computation of a value to be assigned to $slot4$ of $object3$. This is identified by $slot2$ of $object1$. On completion, the function returns the $result1$ value. The life cycle of the function is shown at the right of Fig~\ref{fig:FunctionContext}; the function is called, it executes and returns. If something goes wrong an exception may be thrown.
+The familiar way in which a procedure interacts with its caller and objects is shown at the left of Fig~\ref{fig:FunctionContext}. The example procedure receives a $param1$ parameter value from its caller, and executes, using the parameter to identify $object1$, whose $slot1$ references an $object2$ whose $slot3$ contributes to some computation of a value to be assigned to $slot4$ of $object3$. This is identified by $slot2$ of $object1$. On completion, the procedure returns the $result1$ value. The life cycle of the procedure is shown at the right of Fig~\ref{fig:FunctionContext}; the procedure is called, it executes and returns. If something goes wrong an exception may be thrown.
 
 \begin{figure}
   \begin{center}
     \includegraphics[width=4.5in]{FunctionContext.png}
   \end{center}
-  \caption{Example Function Interactions and Life Cycle}
+  \caption{Example Procedure Interactions and Life Cycle}
   \label{fig:FunctionContext}
 \end{figure}
 
-In contrast, the invocation of a declarative transformation mapping need not be explicit. Rather, when suitable input objects are available, the mapping is invoked and, as depicted on the left of Fig~\ref{fig:MappingContext}, the interaction with objects may appear to be quite similar to those of a function. We use the more complicated life cycle shown at the right of Fig~\ref{fig:MappingContext}. The $invoke$, $exception$ and $success$ transitions correspond to the $call$, $exception$ and $return$ transitions of a function. The $failure$ transition occurs when the mapping's predicates or guards are not satisfied; no execution is required. The $not$-$ready$ transition occurs for a premature access to an object or slot; the execution cannot proceed. A $re$-$invoke$ may be attempted once the accessed object or slot is available.
+In contrast, the invocation of a declarative transformation mapping need not be explicit. Rather, when objects are available, the mapping is invoked exactly once for each distinct permutation of suitable input objects. The interaction with objects shown at the right of Fig~\ref{fig:MappingContext} is similar to those of a procedure, however the life cycle is more complex. The $invoke$, $exception$ and $success$ transitions correspond to the $call$, $exception$ and $return$ transitions of a procedure. The $failure$ transition occurs when the mapping's predicates or guards are not satisfied; no execution is required. The $not$-$ready$ transition occurs for a premature access to an object or slot; the execution cannot proceed. A $re$-$invoke$ may be attempted once the accessed object or slot is available.
 
 \begin{figure}
 	\begin{center}
@@ -75,9 +75,9 @@ In contrast, the invocation of a declarative transformation mapping need not be 
 
 %Functions provide many opportunities for careless programmers to have a hard time debugging their failure to ensure that all accessed objects are ready before a function is executed. In contrast declarative mappings impose a heavy responsibility on the run-time to keep track of the transitive readiness of all accessed object slots.
 
-A further difference between functions and mappings occurs for repeated execution. A function executes each repeat to ensure that side effects are repeated. A mapping invocation must detect the repeat in order to re-use the previous results and avoid any repeated model mutation.
+%A further difference between procedures and mappings occurs for repeated execution. A procedure executes each repeat to ensure that side effects are repeated. A mapping invocation must detect the repeat in order to re-use the previous results and avoid any repeated model mutation.
 
-Sequencing calls and slot accesses can be a challenging programming responsibility for explicit Function calls. Mappings are invoked automatically when the appropriate object slots are ready eliminating this opportunity for programming error.
+Sequencing explicit procedure calls and slot accesses can be a challenging manual programming responsibility. Mappings are invoked automatically when the appropriate object slots are ready eliminating this opportunity for error.
 
 These differences require the run-time for a declarative transformation to be aware of what has executed and which objects and slots are ready. Naively this could make the declarative transformation slower, however the restricted side effects offer significant opportunities for analysis, optimization and so enhanced performance.
 
@@ -85,7 +85,7 @@ These differences require the run-time for a declarative transformation to be aw
 
 The simplest run-time for declarative mappings may just invoke all possible mappings for all possible object permutations, repeating the invocations for $not$-$ready$ slot accesses. This is hideously inefficient. It may not even work since it assumes that there is at least one sequence of mapping executions that yields the required result. However a mapping may group multiple computations, generally to assist human readability. There is no prohibition on one mapping's slot access depending on another mapping's slot assignment and vice-versa, just the common sense prohibition on a pair of mappings such as $X1$ that computes $a = b + 1$ and $X2$ that performs a contradictory computation $b = a + 1$.
  
-A mapping such as $X3$ that computes both $b = c + 1$ and $d = a + 1$ does not contradict $X1$ but it conflicts. $X1$ must wait for $X3$ to provide $b$, and $X3$ must wait for $X1$ to provide $a$. Partitioning $X3$ into $X3a$ and $X3b$, one for each computation, eliminates the problem; $X1$ can be computed after $X3a$ and before $X3b$. We call these partitioned mappings micromappings.
+A mapping such as $X3$ that computes both $b = c + 1$ and $d = a + 1$ does not contradict $X1$ but it conflicts. $X1$ must wait for $X3$ to provide $b$, and $X3$ must wait for $X1$ to provide $a$. Partitioning $X3$ into $X3a$ and $X3b$, one for each computation, removes the conflict; $X1$ can be computed after $X3a$ and before $X3b$. We call these conflict-free partitioned mappings micromappings.
 
 More formally, a micromapping is a guarded atomic computation. It comprises two active life cycle phases, shown in Fig~\ref{fig:MicromappingContext}, a $fragile\ head$ and a $robust\ tail$. The atomic $robust\ tail$ may create or modify objects. The $fragile\ head$ may bypass execution if a predicate is not satisfied or defer execution if a memory access is premature. The $fragile\ head$ may be executed as many times as necessary to obtain the values needed by the $robust\ tail$. Since the $fragile\ head$ makes no changes, there is never any need to roll-back inadvertent changes. The $Waiting$ pre-state and the $Failure$/$Success$ post-states act as mementoes to ensure that repeated invocation can be detected and results re-used.
 
@@ -101,7 +101,7 @@ A minimal micromapping performs exactly one model mutation to avoid inter-mappin
 
 \subsection{Connections}
 
-Each micromapping consumes and produces one or more kinds of value. A `kind' is typically an object's class and derived classes.
+Each micromapping typically consumes and produces one or more values each with  statically declared type.
 %, however a 'kind' may be more elaborate to exploit simple patterns, such as no-children.
 Communication between producer and consumer can be managed by a connection so that connections (C*) and micromappings (M*)  form a graph as shown in Fig~\ref{fig:ExecutionContext}. The first layer of connections is primed by a loader, the results are drained by a saver.
 
@@ -115,7 +115,7 @@ Communication between producer and consumer can be managed by a connection so th
 
 The graph is directed and mostly acyclic. Acyclic parts are amenable to an efficient overall static schedule such as $for$ $each$ $value$ $in$ $C1$ $do$ $M1$. Cyclic parts require dynamic run-time scheduling that is conveniently orchestrated by ensuring that each connection takes responsibility for creating each distinct invocation of each mapping. Thereafter each micromapping invocation can progress from $Waiting$ to $Success$/$Failure$ under the control of an overall dynamic scheduler.
 
-A function just uses its input and returns an output. A micromapping consumes an input value from a connection and may append an output value to another connection. The connection is responsible for invoking all consuming micromappings for each available value, and for accumulating the contributions of all producing micromappings. For micromappings that consume multiple inputs, an invocation occurs for each distinct permutation of the input values.
+A procedure just uses its input and returns an output. A micromapping consumes an input value from a connection and may append an output value to another connection. The connection is responsible for invoking all consuming micromappings for each available value, and for accumulating the contributions of all producing micromappings. For micromappings that consume multiple inputs, an invocation occurs for each distinct permutation of the input values.
 
 \subsection{Dependencies}
 
@@ -131,12 +131,12 @@ The example mapping shown in Fig~\ref{fig:MappingContext} has a single input, bu
   \label{fig:ObjectContext}
 \end{figure}
 
-Functions provide no programming assistance to ensure that objects are accessed and updated in a sound order. This provides excellent opportunities for exciting debugging sessions as unintended concurrencies materialize in practice. Declarative mappings eliminate this major practical hazard by requiring slot accesses to wait until the slot is ready. For an OCL-based transformation language, such as QVTc or QVTr, this is possible. For a traditional programming language such as Java, it is not.
+Functions provide no programming assistance to ensure that objects are accessed and updated in a sound order. This provides excellent opportunities for exciting debugging sessions as unintended concurrencies materialize in practice. Declarative mappings eliminate this major practical hazard by requiring slot accesses to wait until the slot is ready. For an OCL-based transformation language, such as QVTc or QVTr, this is possible. For a traditional non-functional programming language such as Java, it is not practical.
 %unless some very strong disciplines are informally observed. 
 
 %We will now examine the progressive transformation from source transformations to executable schedules.
 
-\section{Analysis}\label{Analysis}
+\section{Compile-time Analysis and Transformation Chain}\label{Analysis}
 
 The transformation chain of the Eclipse QVTd project is shown in Fig~\ref{fig:architecture}.
 
@@ -168,7 +168,8 @@ In this paper we concentrate on the micromappings, connections and optimizations
 	\label{fig:doublylinkedlist}
 \end{figure}
 
-The QVTr exposition of the example shown in Fig~\ref{fig:QVTrelement2element} demonstrates the symmetry and bidirectionality of the problem. It has two $domain$ clauses each with a root object and three property values, matched in the input domain, assigned in the output domain. The relationships defined by other mappings are explicit in the $when$ clauses.
+The QVTr version shown in Fig~\ref{fig:QVTrelement2element} demonstrates the bidirectional symmetry. Either $forward$ or $reverse$  may be externally  selected as the output domain; the other is the input domain. Each $domain$ clause has a root object and three property values, matched in the input domain, assigned in the output domain. The relationships defined by other mappings are explicit in the $when$ clauses. 
+%The QVTr exposition is bidirectional; either $forward$ or $reverse$ domains may be selected as the output, with the other as the input.
 
 \begin{figure}[h]
 	\centering
@@ -229,15 +230,15 @@ The colors therefore identify the dependencies on other mappings. The mapping ex
 
 We have shown some graphs that are inspired by UML Class, Object, Interaction and State Machine diagrams without fully defining them. But graphs that rely on the reader's intuition are of limited utility. We must define the Model of Computation \cite{moc} that underpins QVTs and UMLX diagrams. 
 
-There is no imperative computation, rather there are many constraints that relate elements of the input and the output models. Nodes represent values, objects, slots or operations. Edges define constraints such as navigation paths. Slightly more practically, we have input models, magic happens, then we have output models that satisfy all constraints to the fullest extent possible.
+There is no imperative computation, rather there are many constraints that relate elements of the input and the output models. Nodes represent values, objects, slots or operations. Edges define constraints such as navigation paths. Slightly more practically, we have input models, then `magic happens' and we have output models that satisfy all constraints to the fullest extent possible.
 
-Our diagrams are therefore statements of the final truth of the transformation execution. By analysing and rearranging the diagram content we are able to provide an efficient executable schedule for `magic happens'.
+Our diagrams are statements of the final truth of the transformation execution. By analysing and rearranging the diagram content we are able to auto-generate an efficient executable schedule to replace the `magic happens'.
 
 \subsection{Micromapping Partitioning}
 
 The ATL, QVTr and UMLX expositions use a programmer-friendly partitioning of the overall problem into mappings. Unfortunately this partitioning does not satisfy the atomic micromapping requirement. The problem, evidenced by the presence of a CYAN and a GREEN node of type $Telement2element$ in Fig~\ref{fig:QVTselement2element}, is that the $element2element$ invocation of each element in the doubly linked list depends on the succeeding invocation. This cannot be resolved at compile time. A dynamic schedule must wait until the succeeding invocation has occurred Of course, since the list is circular, the dynamic schedule stalls as the first attempted invocation waits for itself.
 
-Partitioning the mapping does not eliminate the problem, yet conventional tools execute successfully. Typically they create output nodes/objects in a first pass ignoring awkward predicates. Then a second pass resolves edges/relationships. The first pass speculates that the outputs are required. Unfortunately the ignored awkward predicates may require the speculation to be reverted. This is rare in practice and so the unsound speculation may not be apparent.
+Partitioning the mapping does not eliminate the problem, yet conventional tools execute successfully. Typically they create output nodes/objects in a first pass ignoring awkward output predicates. Then a second pass resolves edges/relationships. The first pass speculates that the outputs are required. Unfortunately the ignored awkward predicates may require the speculation to be reverted. This is rare in practice and so the unsound speculation may not be apparent.
 
 We may exploit the trace object to speculate more accurately. Fig~\ref{fig:QVTsMicromappings} shows a partitioning of Fig~\ref{fig:QVTselement2element} into four micromappings.
 
@@ -260,14 +261,14 @@ The third and fourth mappings at the bottom join up the residual references.
 
 In this example we have only trace nodes whose speculation is guaranteed and corrolaries that are guaranteed, allowing the troublesome micromapping step to be statically scheduled. More generally, some awkward predicates may appear at the top right of Fig~\ref{fig:QVTselement2element}. These require a global run-time evaluation; if all predicates are satisfied all related speculations may proceed; if any predicate is not satisfied, no related speculation can be exploited.
 
-The traditional `copy all the nodes' first pass is performed by the first two micromappings without the global check that the speculation was sound. The `copy all the edges' is performed by the last two micromappings.
+The traditional `copy all the nodes' first pass is performed by the first two micromappings. The `copy all the edges' is performed by the last two micromappings. The traditional functionality emerges from the analysis, but without erroneously ignoring predicates that may prohibit execution.   
 % that as we shall see can be merged.
 
 \subsection{Heads}\label{Heads}
 
 Each micromapping must be invoked so that all possible matches are considered, so, very naively, the micromapping at the top left of Fig~\ref{fig:QVTsMicromappings} involving four BLUE nodes may require a four dimensional search of the elements of the input model. Consideration of the types of the BLUE nodes allows many candidates to be rejected. Consideration of the navigations allows nearly all candidates to be rejected. For each $Element$ object that is considered as a match for the $forwardElement$ node, we do not need to search for the other objects since they are all resolveable by to-one navigation paths from $forwardElement$. A one-dimensional search of $Element$ types is therefore sufficient to find all matches.
 
-The to-one navigation is so important to efficient scheduling that it is to-one navigation that determines the arrows in QVTs expositions. Transitive analysis of the to-one navigations identifies the minimum number of objects that have to be located to allow all other objects to be identified. These minimum objects are referred to as the heads and are drawn with thick borders in QVTs diagrams. In practice, most micromappings have a single head. Therefore most micromappings can be scheduled in linear time using a one-dimensional loop. 
+The to-one navigation is so important to efficient scheduling that it is to-one navigation that determines the arrows in QVTs expositions. Transitive analysis of the to-one navigations identifies the minimum number of objects that have to be located to allow all other objects to be identified. These minimum objects are referred to as the heads and are drawn with thick borders in QVTs diagrams. In practice, most micromappings have a single head. Therefore most micromappings can be scheduled in linear time using a one-dimensional loop. The remainder incur often unavoidable non-linear costs.
 
 \subsection{Global scheduling}
 
@@ -315,14 +316,14 @@ The running example was first presented at the EXE~2016 workshop \cite{Willink-E
 \end{figure}
 
 The two fastest results use a fully manually coded and a partially manually coded solution based on the EcoreUtil copier. The results for Eclipse QVTc and QVTr using Java Code Generation are only a little slower.
-The corresponding interpreted performance is about 20 times slower. These results scale fairly linearly demonstrating that a good declarative schedule was identified.
+The corresponding interpreted performance is about 20 times slower. These results scale fairly linear demonstrating that a good declarative schedule was identified.
 
 The curves for ATL, EMTVM and QVTo are similar to QVTc interpreted until a quadratic effect takes over for large models.
-% Epsilon runs out of stack for comparatively small models.
+Epsilon runs out of stack for comparatively small models.
 
 \section{Related Work}\label{Related Work}
 
-This work on static analysis and optimization of declarative schedules and metamodels appears to be almost completely novel. Existing model to model transformation tools such as ATL, Eclipse QVTo, Epsilon and Henshin \cite{Eclipse-Henshin} do very little if any static analysis and optimization.
+Existing model to model transformation tools such as ATL, Eclipse QVTo, Epsilon and Henshin \cite{Eclipse-Henshin} do very little if any static analysis or optimization. This work on static analysis and optimization of declarative schedules and metamodels using micromappings and connections appears to be almost completely novel. 
 
 In the Triple Graph world, a catalogue of optimizations has been proposed \cite{TGG-Optimization}; domain driven applicability, caching/indexing, static analysis, incremental execution. Many of these come for free in the current work.
 
@@ -330,7 +331,9 @@ The explicit middle model imposed by QVTc traceability reifies a trace object so
 % The use of the 'wrong' domain is not expensive.
 The trace object is an inherent cache of related information. Indexing is an OCL-level further work optimization. Local and global analyses for the Micromapping Model of Computation have been described in the preceding sections.
 
-Incremental execution has not been discussed in this paper. The Connections shown in Fig~\ref{fig:ExecutionContext} are well suited to incremental and concurrent execution.
+%Incremental execution has not been discussed in this paper. The Connections shown in Fig~\ref{fig:ExecutionContext} are well suited to incremental and concurrent execution.
+
+Although not discussed in this paper, the utility of Connections shown in Fig~\ref{fig:ExecutionContext} for incremental execution is demonstrated by the Eclipse implementation.
 
 Detailed comparison of the approaches is quite hard, since it is very easy to provide a really bad reference implementation against almost any sensible implementation will appear fantastic.
 
