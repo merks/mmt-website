@@ -4,7 +4,8 @@ $oldrels = array(
 	"0.8.0" => array("2010/07/10", "http://archive.eclipse.org/mmt/qvtd/downloads/drops/0.8.0/S201007101005/"),	// explicit URL to show S
 	"0.9.0" => "201206271156",
 	"0.10.0" => "201306081712",
-	"0.11.0" => "201406021254"
+	"0.11.0" => "201406021254",
+	"0.12.0" => "201506090524"
 );
 
 function showNotes()
