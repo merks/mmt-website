@@ -44,9 +44,9 @@ Models provide a disciplined representation of information. Model-to-Model (M2M)
 %
 For model enthusiasts, everything is a model and every change is a model-to-model transformation. Models are persisted in a form that is suitable for automated use, often involving XMI files or model databases. Unfortunately, in the real world there are many occasions where a practical representation of a model is required. If the information is to be maintained by humans, something more readable than XML is required. If the information is to be consumed by a tool, such as a C compiler that has no knowledge of models, the information must be provided in the tool-specific language, such as C. A model-to-text transformation is therefore required to provide the model in the required form.
 
-An M2T destroys models whereas an M2M preserves models; consequently there is an orthodoxy that M2M and M2T are different technologies. An M2T language is designed around string template expressions, whereas an M2M language is designed around model mappings. This orthodoxy is endorsed by the Object Management Group (OMG) where M2M is facilitated by the Query/View/Transformation (QVT) specification \cite{QVT-1.3} and M2T by the MOFM2T specification \cite{MOFM2T-1.0}. There are a variety of correspondingly named implementations of the QVT languages \cite{Eclipse-QVTd}, \cite{Eclipse-QVTo}. Acceleo \cite{Eclipse-Acceleo} is the only (partial) implementation of MOFM2T.
+An M2T destroys models whereas an M2M preserves models; consequently there is an orthodoxy that M2T and M2M are different technologies. An M2T language is designed around string template expressions, whereas an M2M language is designed around model mappings. This orthodoxy is endorsed by the Object Management Group (OMG) where M2T is specified by MOFM2T \cite{MOFM2T-1.0} and M2M by Query/View/Transformation (QVT) \cite{QVT-1.3}. Acceleo \cite{Eclipse-Acceleo} is the only (partial) implementation of MOFM2T. There are a variety of correspondingly named implementations of the QVT languages \cite{Eclipse-QVTd}, \cite{Eclipse-QVTo}. 
 
-In this paper we examine the distinctive characteristics of M2T in Section~\ref{M2T} before examining an M2M solution in Section~\ref{M2M}. In Section~\ref{Evaluation} we evaluate the solution before outlining future work in Section~\ref{Future Work}. We consider related work in Section~\ref{Related Work} and conclude in Section~\ref{Conclusions}. 
+In Section~\ref{M2T} we examine the distinctive characteristics of M2T, which we realize using an M2M in Section~\ref{M2M}. In Section~\ref{Evaluation} we evaluate the solution before outlining future work in Section~\ref{Future Work}. We consider related work in Section~\ref{Related Work} and conclude in Section~\ref{Conclusions}. 
 
 \section{Is M2T necessarily distinct?}\label{M2T}
 
@@ -78,7 +78,7 @@ The name is "[self.name/]".  -- MOFM2T/Acceleo with escaped OCL
 The name is "«this.name»".   -- Xtend with escaped Java
 \end{verbatim}
 
-A backwards escape may define a multi-line text expression that concatenates with its siblings and may have nested forward escapes. However an OCL-based M2M without escapes may only concatenate explicitly.
+A backwards escape may define a multi-line text expression that concatenates with its siblings and may have nested forward escapes.
 
 \begin{verbatim}
 'The name is "[self.name/]".'       -- MOFM2T
@@ -155,7 +155,7 @@ B\'ezevin \cite{TechnologySpace} identified distinct model, grammar and XSD tech
 
 The proprietary ATL injector and extractor are not necessary when using EMF since the variant loading and saving functionality can be encapsulated by a custom XML Resource allowing it to be used by any M2M tool. We may therefore use the structure shown in Figure~\ref{fig:XMLM2M}.
 
-The main difficulty in implementing this approach lies in the absence of a good metamodel for XML. After examining a few candidates, it was clear that none was suitable as a standard against which users could write their XML transformations. The SAX parser \cite{SAXparser} is the de facto standard and so the http://www.eclipse.org/qvt/2018/XML metamodel was defined to closely correspond to the familiar SAX parsing events; startElement() creates, and starts to populate, an Element; endElement() completes population. The model vocabulary of the XML metamodel is therefore obvious to anyone familiar with the vocabulary of the SAX parser events.
+The main difficulty in implementing this approach lies in the absence of a good metamodel for XML. After examining a few candidates, it was clear that none was suitable as a standard against which users could write their XML transformations. The SAX parser \cite{SAXparser} is the de facto standard and so the http://www.eclipse.org/qvt/2018/XML metamodel was defined to closely correspond to the familiar SAX parsing events; startElement() creates an Element and starts to populate it; endElement() completes population. The model vocabulary of the XML metamodel is therefore obvious to anyone familiar with the vocabulary of the SAX parser events.
 
 Migrating the functionality from proprietary ATL injector/extractor to EMF Resources enables the XML technology space to be used whenever \verb$*.xmlmodel$ is used as the file extension of an input/output model. No modification to tools is required. % unless file extensions such as \verb$*.xml$ or \verb$*.ecore$ are to be selectively usable in either Model or XML technology spaces. Without change standard file extension are always for use in the Model technology space; the new \verb$*.xmlmodel$ is always in the XML technology space.
 
@@ -223,7 +223,7 @@ With a Text metamodel, we can separate the concerns.
 	\label{fig:TextModel}
 \end{figure}
 
-The Text model shown in Figure~\ref{fig:TextModel} compromises a tree of StringNode elements organized by \verb$parent$/ordered-\verb$children$ relationships. The additional attributes provide declarations to control the pretty printing performed by the Text Saver.
+The Text metamodel shown in Figure~\ref{fig:TextModel} compromises a tree of StringNode elements organized by the ordered \verb$parent$/\verb$children$ relationship. Additional attributes control the pretty printing performed by the Text Saver.
 
 \subsection{Text Saver}\label{Text Saver}
 
@@ -283,7 +283,7 @@ The redundant emitPreferences1 demonstrates that declarations occur as functions
 	\label{fig:XtendExample}
 \end{figure}
 
-Finally the new QVTo and Text Model solution is shown in Figure~\ref{fig:QVToExample} is a little more verbose (or a little more modular). The inner formatting is factored out as emitPrecedence3 that constructs a StringNode comprising just the formatted precedence element. Since there is no string template capability, the self.name expression needs no elaboration, but the text needs quoting and concatenation. 
+The new QVTo and Text Model solution is shown in Figure~\ref{fig:QVToExample}. It is a little more verbose (or a little more modular). The inner formatting is factored out as emitPrecedence3 that constructs a StringNode comprising just the formatted precedence element. Since there is no string template capability, the self.name expression needs no elaboration, but the text needs quoting and concatenation. 
 
 \begin{figure}
 	\begin{center}
@@ -331,7 +331,7 @@ The current support is usable. The text model is powerful, but could be extended
 
 \subsection{splice iterator}
 
-The inelegance of the splicing at the end of Section~\ref{Text Facilities} may be mitigated by adding a splice() iterator to the OCL Standard Library for ordered collections of toString()-able elements could support:
+The inelegance of the splicing at the end of Section~\ref{Text Facilities} may be mitigated by adding a splice() iterator to the OCL Standard Library for ordered collections of toString()-able elements. This could support:
 
 \begin{verbatim}
 '{ '+ somePs->splice(p; separator=',' | '"'+ p.name +'"') +' }'
@@ -339,7 +339,7 @@ The inelegance of the splicing at the end of Section~\ref{Text Facilities} may b
 
 \subsection{Line Wrapping}\label{Line Wrapping}
 
-Line wrapping is not conventionally available for M2T. The separation of information and rendering concerns enables the Text Model saver to respect a prevailing indentation and line-breaking policy and wrap lines accordingly. Figure~\ref{fig:TextModel}  shows a \verb$nonBreakingSpace$ property that is intended to provide a facility to control automatic wrapping of too-long lines. Long lines are first broken at spaces or tabs, then non-breaking space characters are replaced by space characters.
+Line wrapping is not conventionally available for M2T. Separation of information and rendering concerns enables the Text Model saver to respect a prevailing indentation and line-breaking policy and wrap lines accordingly. Figure~\ref{fig:TextModel}  shows a \verb$nonBreakingSpace$ property that is intended to provide a facility to control automatic wrapping of too-long lines. Long lines are first broken at spaces or tabs, then non-breaking space characters are replaced by space characters.
 
 \subsection{Declarative Pretty Printing}\label{Declarative Pretty Printing}
 
@@ -347,18 +347,25 @@ Tools such as Xtext have demonstrated how the addition of model assignment annot
 
 \subsection{String Templates}\label{String Templates}
 
-In the introduction we identified a need to facilitate text synthesis, possibly using a syntax similar to Xtext's triple quote String Template with embedded guillemeted OCL expressions.
-The evaluation in Section~\ref{Evaluation} observed that String Templates are not essential, although they may be useful, particularly for output comprising mostly boilerplate.
+In the introduction we identified a need to facilitate text synthesis. The evaluation in Section~\ref{Evaluation} observed that String Templates are not essential, although they may be useful, particularly for output comprising mostly boilerplate.
 
 A string template expression could be added to OCL, in much the same way as it has been to Xtend, 
-but learning from Xtend, Acceleo and MOFM2T four escape tokens are needed for the start and end of  a forward or backward escape. Acceleo has only 2, Xtend and MOFM2T just 3 which inhibits arbitrary nesting. Again learning from Xtend, guillemets are very readable and so we might look to use.
+but learning from Xtend, Acceleo and MOFM2T, four escape tokens are needed for the start and end of a forward or backward escape. Acceleo has only 2, Xtend and MOFM2T just 3 which inhibits arbitrary nesting. Again learning from Xtend, guillemets are very readable and so we might use:
 
 \begin{verbatim}
   «ocl-expression»        forwards escape within literal text
   «'string-template'»     backwards escape - an ocl-expression
+  
+  
+
 \end{verbatim}
 
-(An OCL expression starting or ending with a ' can be disambiguated with a space)
+An OCL expression starting or ending with a \verb|'| can be disambiguated with a space. Literal guillemets may be escaped.
+
+\begin{verbatim}
+  « 'literal-text' »      disambiguated ocl expression
+  ««»  «»»                escaped literal guillemets
+\end{verbatim}
 
 These escapes enable the core of our evaluation example from Section~\ref{Evaluation} to nest an ocl-expression within a string-template within an ocl-expression within a string-template within a QVTo statement.
 
@@ -410,7 +417,7 @@ We have demonstrated the usability of this approach by using Eclipse QVTo to gen
 
 We have outlined minor extensions to OCL to improve OCL-based M2M usability for M2T.
 
-We can therefore argue that this simple approach to M2T is more compliant with the OMG MOFM2T RFP than the eventual MOFM2T standard.
+We can therefore argue that this simple approach to M2T is more compliant with the OMG MOFM2T RFP than the MOFM2T specification.
 
 
 % ---- Bibliography ----
