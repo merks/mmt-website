@@ -36,8 +36,6 @@
 
 \begin{abstract}
 Models provide a disciplined representation of information. Model-to-Model (M2M) transformations convert between model structures. When a more readable representation is required, Model-to-Text (M2T) transformations convert a model structure to a concatenation of character sequences. We ignore the obvious conversion differences and demonstrate that an unmodified M2M tool can be used for M2T. We achieve this with a standard Text model that post-processes the M2M model output to yield formatted text. 
-
-\keywords{Model transformation, M2M, M2T, Text model}
 \end{abstract}
 %
 \section{Introduction}
@@ -329,7 +327,7 @@ The \verb$http://www.eclipse.org/qvt/2018/TextModel$ metamodel and its support w
 
 The current support is usable. The text model is powerful, but could be extended. More significant is the opportunity for syntax sugar to make that power more accessible.
 
-\subsection{splice iterator}
+\subsection{Splice Iterator}
 
 The inelegance of the splicing at the end of Section~\ref{Text Facilities} may be mitigated by adding a splice() iterator to the OCL Standard Library for ordered collections of toString()-able elements. This could support:
 
@@ -391,7 +389,7 @@ Incremental or parallel execution is difficult in an M2M with imperative charact
 
 \section{Related Work}\label{Related Work}
 
-Defining a really simple text model to allow an M2M to be used for an M2T seems like a rather obvious idea. However string template orthodoxy is so entrenched that this simple tree model seems to have been overlooked. Consequently many tools and researchers use naive Strings and then struggle to recover lost structure.
+Defining a really simple text model to allow an M2M transformation language to be used for an M2T seems like a rather obvious idea. However string template orthodoxy is so entrenched that this simple tree model seems to have been overlooked. Consequently many tools and researchers use naive Strings and then struggle to recover lost structure.
 
 Ogunyomi \cite{Signatures} introduces user-defined signatures to facilitate identifying text segments that need updating. These should be available automatically as a consequence of dependency analysis in a declarative M2M. 
 
@@ -406,6 +404,8 @@ Figure~\ref{fig:M2MM2TFeatureModel} shows a Feature Model for our use of M2M for
 \end{figure}
 
 This highlights that the mandatory forwards escaping is missing; we have proposed an OCL extension to remedy this. In other respects, the M2M facilities provide good feature coverage and additional features regarding model output. The external text model provides for extensibility.
+
+Tisi et all \cite{ATLHOT} add Higher Order capabilities to ATL that include an ability to embed concrete syntax within output patterns using \verb$|[...]|$ reverse escaping.
 
 \section{Conclusions}\label{Conclusions}
 
@@ -447,6 +447,9 @@ Rose, L., Matragkas, N., Kolovos, D.,  Paige, R.: A feature model for model-to-t
 \bibitem{Bug396543}
 Siljamaki, T.: Additional M2T capability in QVTO. Eclipse QVTo project Bugzilla 396543. December, 2012.
 \url{https://bugs.eclipse.org/396543}
+
+\bibitem{ATLHOT}
+ Tisi M., Cabot J., Jouault F.: Improving Higher-Order Transformations Support in ATL. In: Tratt L., Gogolla M. (eds) Theory and Practice of Model Transformations. ICMT 2010. Lecture Notes in Computer Science, vol 6142. Springer, Berlin, Heidelberg
 
 \bibitem{MOFM2T-RFP}
 MOF Model to Text Transformation Language Request For Proposal. OMG Document: ad/04-04-07, April 2004.
