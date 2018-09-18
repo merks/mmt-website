@@ -1,10 +1,16 @@
 <?php
 
 $oldrels = array(
+	"3.6.0" => "201606061156",
+	"3.5.0" => "201506031058",
+	"3.4.1" => "201502011444",
+	"3.4.0" => "201406101621",
+	"3.3.0" => "201306110213",
+	"3.2.2" => "201301281651",
 	"3.2.1" => "201209180827",
 	"3.2.0a" => array("2012/08/22", "http://archive.eclipse.org/mmt/qvto/downloads/drops/3.2.0/S201208221524/"),	// explicit URL to show S
 	"3.2.0RC3" => array("2012/06/04", "http://archive.eclipse.org/mmt/qvto/downloads/drops/3.2.0/S201206041614/"),	// explicit URL to show S
-//	"3.1.0" => "201106270651",
+	"3.1.0" => "201106270651",
 	"3.0.1" => array("2010/09/03", "http://archive.eclipse.org/mmt/qvto/downloads/drops/3.0.1/M201009301515/"),	// explicit URL to show M
 	"3.0.0" => "201006151231",
 	"2.0.1a" => array("2010/01/22", "http://archive.eclipse.org/mmt/qvto/downloads/drops/2.0.1/M201001221708/"),	// explicit URL to show M
