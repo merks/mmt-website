@@ -1,4 +1,16 @@
 <?php
+if (isset($_GET["project"])) {
+  if ($_GET["project"] == "atl") {
+    header("Location: https://projects.eclipse.org/projects/modeling.mmt.atl/downloads");
+    die();
+  } else if ($_GET["project"] == "qvtd") {
+    header("Location: https://projects.eclipse.org/projects/modeling.mmt.qvtd/downloads");
+    die();
+  } else if ($_GET["project"] == "qvto") {
+    header("Location: https://projects.eclipse.org/projects/modeling.mmt.qvt-oml/downloads");
+    die();
+  }
+}
 require_once ($_SERVER['DOCUMENT_ROOT'] . "/modeling/includes/buildServer-common.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php"); require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php");  require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php"); $App = new App(); $Nav = new Nav(); $Menu = new Menu(); include($App->getProjectCommon());
 
